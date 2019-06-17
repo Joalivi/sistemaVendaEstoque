@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Meta tags Obrigatórias -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript" src="js/login.js"></script>
+        <title>Login</title>
+    </head>
+    <body>
+        <form class="col-md-3 margem-login" id="form-login" onsubmit="return submitlogin()">
+            <div class="form-group">
+                <label for="inputUsuario">Usuário</label>
+                <input type="text" class="form-control" name="inputUsuario" id="inputUsuario" placeholder="Usuário" required>
+            </div>
+            <div class="form-group">
+                <label for="inputSenha">Senha</label>
+                <input type="password" class="form-control" name="inputSenha" id="inputSenha" placeholder="Senha" required>
+            </div>   
+            <span class="loginerrado" name="loginerrado" id="loginerrado" hidden>Usuário ou senha incorreta</span>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Entrar">
+            </div>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,11 @@
+.margem-login{
+    margin-left: 37.5%;
+    margin-top: 15%;
+    padding: 2%;
+    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.808);
+    text-align: center;
+}
+.loginerrado{
+    color: red;
+    font-weight: 500;
+}
