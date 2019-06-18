@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+  <head>
+    <!-- Meta tags Obrigatórias -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script type="text/javascript" src="../js/main.js"></script>
+    <title>Produtos</title>
+  </head>
+  <body>
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand" href="../inicial.html"><img src="img/iflogo.png" height="51" width="200"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <form class="form-inline my-2 my-lg-0 offset-6">
+                <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ir</button>
+              </form>
+          </nav>
+          <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" id="navbarsuperior">
+                  <li class="nav-item active">
+                    <a class="nav-link text-white px-5 ml-5" href="../produtos/index.html">Produtos <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white px-5 ml-4" href="funcionarios.html">Funcionários</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-white px-5 ml-4" href="venda.html">Venda</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-white px-5 ml-4" href="estoque.html">Estoque</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-white px-5 ml-4" href="lucro.html">Lucro da Empresa</a>
+                  </li>
+                </ul>
+              </div>
+          </nav>
+          <div class="row col-md-12">
+              <div class="col-md-3 mt-3 bg-primary" id="sidebar">
+                  <h2 class='text-white'>Produtos</h2>
+                  <hr color="#ffffff">
+                  <a class="text-white" href="cadastrar.html">Cadastrar</a><br><br>
+                  <a class="text-white" href="listar.html">Listar</a><br><br>
+                  <a class="text-white" href="remover.html">Remover</a><br><br>
+                  <a class="text-white" href="editar.html">Editar</a><br><br>
+              </div>
+              <div class="col-md-9 mt-3">
+                  <h3><b>Cadastrar Produto</b></h3><br>
+                  <form onsubmit="return submitCadastroProduto()">
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label for="nomeProduto">Nome</label>
+                                <input type="text" class="form-control" id="nomeProduto" placeholder="Nome do Produto">
+                            </div>
+                            <div class="form-group col-md-3">
+                                    <label for="idProduto">Id</label>
+                                    <input type="text" class="form-control" id="idProduto">
+                            </div>
+                            <div class="form-group col-md-3">
+                                    <label for="dataValidade">Data de Validade</label>
+                                    <input type="date" class="form-control" id="dataValidade">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label for="taxaImposto">Taxa de Imposto</label>
+                                <input type="number" step="0.01" class="form-control" id="taxaImposto" placeholder="Taxa de Imposto (%)">
+                            </div>
+                            <div class="form-group col-md-3">
+                                    <label for="quantidadeProduto">Quantidade</label>
+                                    <input type="number" class="form-control" id="quantidadeProduto" placeholder="Quantidade">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label for="precoProduto">Preço</label>
+                                <input type="number" step="0.01" class="form-control" id="precoProduto" placeholder="Preço">
+                            </div>
+                            <div class="form-group col-md-3">
+                                    <label for="funcionarioProduto">Funcionário a cadastrar</label>
+                                    <select class="form-control" id="funcionarioProduto" onmouseover="comboFuncionarios()">
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <input type="submit" class="col-md-5 btn btn-primary" value="Salvar">
+                            </div>
+                        </div>
+                  </form>
+              </div>
+          </div>
+      </div> 
+  <script src="bootstrap/js/jquery-3.2.1.min.js"></script>
+  <script src="bootstrap/js/popper.min.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>s
+  </body>
+</html>

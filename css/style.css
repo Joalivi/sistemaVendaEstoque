@@ -9,3 +9,17 @@
     color: red;
     font-weight: 500;
 }
+.nav-item a{
+    font-size: 16px;
+}
+#sidebar{
+    min-height: 80vh;
+    text-align: center;
+}
+#navbarsuperior li:hover{
+    transform: scale(1.2);
+}
+.formattext{
+    text-align: justify;
+    font-size: 18px;
+}
