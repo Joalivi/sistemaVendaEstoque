@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script type="text/javascript" src="../js/main.js"></script>
-    <title>Produtos</title>
+    <title>Funcionários</title>
   </head>
-  <body onload="preencheCamposProdutos()">
+  <body onload="preencheCamposFuncionarios()">
       <div class="container mt-4">
             <nav class="navbar navbar-expand-lg navbar-light bg-primary">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -40,43 +40,28 @@
             </nav>
           <div class="row col-md-12">
               <div class="col-md-3 mt-3 bg-primary" id="sidebar">
-                  <h2 class='text-white'>Produtos</h2>
+                  <h2 class='text-white'>Funcionários</h2>
                   <hr color="#ffffff">
                   <a class="text-white" href="cadastrar.html">Cadastrar</a><br><br>
                   <a class="text-white" href="listar.html">Listar / Editar / Remover</a><br><br>
               </div>
               <div class="col-md-9 mt-3">
-                  <h3><b>Editar Produto</b></h3><br>
-                  <form onsubmit="return atualizaCadastroProduto()">
+                  <h3><b>Editar Funcionario</b></h3><br>
+                  <form onsubmit="return atualizaCadastroFuncionario()">
                         <div class="row">
                             <div class="form-group col-md-5">
-                                <label for="nomeProduto">Nome</label>
-                                <input type="text" class="form-control" id="nomeProduto" placeholder="Nome do Produto" required>
+                                <label for="nomeFuncionario">Nome</label>
+                                <input type="text" class="form-control" id="nomeFuncionario" placeholder="Nome" required>
                             </div>
                             <div class="form-group col-md-3">
-                                    <label for="dataValidade">Data de Validade</label>
-                                    <input type="date" class="form-control" id="dataValidade" required>
+                                <label for="salarioFuncionario">Salário</label>
+                                <input type="number" step="0.01" class="form-control" id="salarioFuncionario" placeholder="Salário" required>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-5">
-                                <label for="taxaImposto">Taxa de Imposto</label>
-                                <input type="number" step="0.01" class="form-control" id="taxaImposto" placeholder="Taxa de Imposto (%)" required>
-                            </div>
-                            <div class="form-group col-md-3">
-                                    <label for="quantidadeProduto">Quantidade</label>
-                                    <input type="number" class="form-control" id="quantidadeProduto" placeholder="Quantidade" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-5">
-                                <label for="precoProduto">Preço</label>
-                                <input type="number" step="0.01" class="form-control" id="precoProduto" placeholder="Preço" required>
-                            </div>
-                            <div class="form-group col-md-3">
-                                    <label for="funcionarioProduto">Funcionário a cadastrar</label>
-                                    <select class="form-control" id="funcionarioProduto" required>
-                                    </select>
+                            <div class="form-group col-md-8">
+                                <label for="enderecoFuncionario">Endereço</label>
+                                <input type="text" class="form-control" id="enderecoFuncionario" placeholder="Endereço" required>
                             </div>
                         </div>
                         <div class="row">

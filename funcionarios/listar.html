@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+  <head>
+    <!-- Meta tags Obrigatórias -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script type="text/javascript" src="../js/main.js"></script>
+    <title>Funcionários</title>
+  </head>
+  <body>
+      <div class="container mt-4">
+          <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" id="navbarsuperior">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white px-5 ml-3" href="../inicial.html">Inicial <span class="sr-only">(current)</span></a>
+                    </li>
+                  <li class="nav-item active">
+                    <a class="nav-link text-white px-5 ml-2" href="../produtos/index.html">Produtos <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white px-5 ml-2" href="../funcionarios/index.html">Funcionários</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-white px-5 ml-2" href="../venda/index.html">Venda</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-white px-5 ml-2" href="../estoque/index.html">Estoque</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-white px-5 ml-2" href="../lucro/index.html">Lucro da Empresa</a>
+                  </li>
+                </ul>
+              </div>
+          </nav>
+          <div class="row col-md-12">
+              <div class="col-md-3 mt-3 bg-primary" id="sidebar">
+                  <h2 class='text-white'>Funcionários</h2>
+                  <hr color="#ffffff">
+                  <a class="text-white" href="cadastrar.html">Cadastrar</a><br><br>
+                  <a class="text-white" href="listar.html">Listar / Editar / Remover</a><br><br>
+              </div>
+              <div class="col-md-9 mt-3">
+                  <h3><b>Listagem de Funcionários</b></h3><br>
+                  <div class="row ml-3">
+                        <div class="col-md-3">
+                            <input type="button" class="btn btn-primary" value="Listar Tudo" onclick="listarTudoFuncionarios()">
+                        </div>
+                        <form class="form-inline col-md-9">
+                            <input class="form-control mr-sm-2" type="search" id="buscanome" placeholder="Procurar por nome" aria-label="Search">
+                            <input type="button" class="btn btn-primary my-2 my-sm-0" value="Ir" onclick="buscarNomeFuncionarios()">
+                        </form>
+                  </div>
+                  <div id="listagemFuncionarios">
+                    
+                  </div>
+              </div>
+          </div>
+      </div> 
+  <script src="../bootstrap/js/jquery-3.2.1.min.js"></script>
+  <script src="../bootstrap/js/popper.min.js"></script>
+  <script src="../bootstrap/js/bootstrap.min.js"></script>s
+  </body>
+</html>

@@ -12,7 +12,7 @@
     <script type="text/javascript" src="../js/main.js"></script>
     <title>Produtos</title>
   </head>
-  <body>
+  <body onload="comboFuncionarios()">
       <div class="container mt-4">
             <nav class="navbar navbar-expand-lg navbar-light bg-primary">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -75,7 +75,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                     <label for="funcionarioProduto">Funcionário a cadastrar</label>
-                                    <select class="form-control" id="funcionarioProduto" onmouseover="comboFuncionarios()">
+                                    <select class="form-control" id="funcionarioProduto" required>
                                     </select>
                             </div>
                         </div>
