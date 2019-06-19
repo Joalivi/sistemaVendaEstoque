@@ -46,11 +46,18 @@
                   <a class="text-white" href="listar.html">Listar / Editar / Remover</a><br><br>
               </div>
               <div class="col-md-9 mt-3">
-                  <h3><b>Produtos</b></h3><br>
-                  <div>
-                      <div class="formattext">
-                        Esta é a página inicial dos Produtos, escolha o que quer fazer nos links ao lado.
-                      </div>
+                  <h3><b>Listagem de Produtos</b></h3><br>
+                  <div class="row ml-3">
+                        <div class="col-md-3">
+                            <input type="button" class="btn btn-primary" value="Listar Tudo" onclick="listarTudo()">
+                        </div>
+                        <form class="form-inline col-md-9">
+                            <input class="form-control mr-sm-2" type="search" id="buscanome" placeholder="Procurar por nome" aria-label="Search">
+                            <input type="button" class="btn btn-primary my-2 my-sm-0" value="Ir" onclick="buscarNome()">
+                        </form>
+                  </div>
+                  <div id="listagemProdutos">
+                    
                   </div>
               </div>
           </div>
