@@ -12,7 +12,7 @@
     <script type="text/javascript" src="../js/main.js"></script>
     <title>Produtos</title>
   </head>
-  <body onload="comboFuncionarios()">
+  <body onload="startVendas()">
       <div class="container mt-4">
             <nav class="navbar navbar-expand-lg navbar-light bg-primary">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -40,45 +40,31 @@
             </nav>
           <div class="row col-md-12">
               <div class="col-md-3 mt-3 bg-primary" id="sidebar">
-                  <h2 class='text-white'>Produtos</h2>
+                  <h2 class='text-white'>Vendas</h2>
                   <hr color="#ffffff">
-                  <a class="text-white" href="cadastrar.html">Cadastrar</a><br><br>
+                  <a class="text-white" href="cadastrar.html">Nova Venda</a><br><br>
                   <a class="text-white" href="listar.html">Listar / Editar / Remover</a><br><br>
               </div>
               <div class="col-md-9 mt-3">
-                  <h3><b>Cadastrar Produto</b></h3><br>
-                  <form onsubmit="return submitCadastroProduto()">
+                  <h3><b>Adicionar Venda</b></h3><br>
+                  <form onsubmit="return submitCadastroVenda()">
                         <div class="row">
-                            <div class="form-group col-md-5">
-                                <label for="nomeProduto">Nome</label>
-                                <input type="text" class="form-control" id="nomeProduto" placeholder="Nome do Produto" required>
-                            </div>
-                            <div class="form-group col-md-3">
-                                    <label for="dataValidade">Data de Validade</label>
-                                    <input type="date" class="form-control" id="dataValidade" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-5">
-                                <label for="taxaImposto">Taxa de Imposto</label>
-                                <input type="number" step="0.01" class="form-control" id="taxaImposto" placeholder="Taxa de Imposto (%)" required>
+                            <div class="form-group col-md-4">
+                                <label for="vendaProduto">Produto</label>
+                                <select class="form-control" id="vendaProduto" required>
+                                </select>
+                            </div>  
+                            <div class="form-group col-md-4">
+                                <label for="funcionarioProduto">Funcionário</label>
+                                <select class="form-control" id="funcionarioProduto" required>
+                                </select>
                             </div>
                             <div class="form-group col-md-3">
                                     <label for="quantidadeProduto">Quantidade</label>
                                     <input type="number" class="form-control" id="quantidadeProduto" placeholder="Quantidade" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-5">
-                                <label for="precoProduto">Preço</label>
-                                <input type="number" step="0.01" class="form-control" id="precoProduto" placeholder="Preço" required>
-                            </div>
-                            <div class="form-group col-md-3">
-                                    <label for="funcionarioProduto">Funcionário a cadastrar</label>
-                                    <select class="form-control" id="funcionarioProduto" required>
-                                    </select>
-                            </div>
-                        </div>
+                            </div> 
+                    </div>    
+                        
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <input type="submit" class="col-md-5 btn btn-primary" value="Salvar">
@@ -93,3 +79,5 @@
   <script src="../bootstrap/js/bootstrap.min.js"></script>s
   </body>
 </html>
+
+

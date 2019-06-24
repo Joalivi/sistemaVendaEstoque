@@ -6,6 +6,7 @@ if(localStorage.getItem("Produtos")===null){
     var Produtos = JSON.parse(ProdutosStorage);
     var idproduto = localStorage.getItem("IdProduto");
 }
+
 if(localStorage.getItem("Funcionarios")===null){
     var Funcionarios = [];
     var idfuncionario=0;
@@ -15,6 +16,18 @@ if(localStorage.getItem("Funcionarios")===null){
     var idfuncionario = localStorage.getItem("IdFuncionario")
 }
 
+if(localStorage.getItem("Vendas")===null){
+    var Vendas = [];
+    var idvendas=0;
+}else{
+    var VendasStorage=localStorage.getItem("Vendas");
+    var Vendas = JSON.parse(VendasStorage);
+    var idvendas = localStorage.getItem("IdVendas")
+}
+
+function zeraVariaveis(){
+    localStorage.clear();
+}
 function listarTudoFuncionarios(){
     if(Funcionarios.length===0){
         document.getElementById("listagemFuncionarios").innerHTML="<p>Nenhum funcionário foi encontrado</p>";    
@@ -76,6 +89,31 @@ function listarTudo(){
     }
 }
 
+function listarVendas(){
+    if(Produtos.length===0){
+        document.getElementById("listagemVendas").innerHTML="<p>Nenhum produto foi encontrado</p>";
+    }else{
+        var string="<table class=\"table table-hover mt-2\">"+
+        "<thead>"+
+          "<tr>"+
+            "<th scope=\"col\">Id</th>"+
+            "<th scope=\"col\">Produto</th>"+
+            "<th scope=\"col\">Quantidade</th>"+
+            "<th scope=\"col\">Funcionário</th>"+
+          "</tr>"+
+        "</thead><tbody>";
+        for(i=0;i<Vendas.length;i++){
+            string=string.concat("<tr><td>"+Vendas[i].id+"</td><td>"+Vendas[i].produto+"</td><td>"+Vendas[i].quantidade+
+            "</td><td>"+Vendas[i].funcionario+"</td>"+
+            "<td><button class=\"btn btn-outline-danger\" onclick=\"removerVendas("+Vendas[i].id+")\">"+
+            "<img src=\"../img/trash.png\" height=\"20px\"width=\"20px\">"+ 
+            "</button></td></tr>");
+        }
+        string=string.concat("</tbody></table>");
+        document.getElementById("listagemVendas").innerHTML=string;
+    }
+}
+
 function removerFuncionario(id){
     for(i=0;i<Funcionarios.length;i++){
         if(Funcionarios[i].id==id){
@@ -93,6 +131,17 @@ function removerProduto(id){
         }
     }
     localStorage.setItem("Produtos", JSON.stringify(Produtos));
+    window.location.reload();
+}
+
+function removerVendas(id){
+    for(i=0;i<Vendas.length;i++){
+        if(Vendas[i].id==id){
+            Vendas.splice(i,1);
+            
+        }
+    }
+    localStorage.setItem("Vendas", JSON.stringify(Vendas));
     window.location.reload();
 }
 
@@ -239,6 +288,18 @@ function atualizaCadastroProduto(){
     }
 }
 
+function atualizaVendaProduto(id,qtdd,i){
+        
+    if(localStorage.getItem("idedit")==JSON.stringify(Produtos[i].id)){
+            var aux;
+            aux = Number(Produtos[i].quantidade)
+            aux += qtdd
+            Produtos[i].quantidade=aux;
+            localStorage.setItem("Produtos", JSON.stringify(Produtos));
+        }
+    
+}
+
 function submitCadastroFuncionario(){
     var idp = ++idfuncionario;
     var nomep = document.getElementById("nomeFuncionario").value;
@@ -267,12 +328,52 @@ function submitCadastroProduto(){
     Produtos.push(produto);
     localStorage.setItem("Produtos", JSON.stringify(Produtos));
     localStorage.setItem("IdProduto", idproduto);
+    
+}
+
+function submitCadastroVenda(){
+    
+    var vda = ++idvendas;
+    var produtov = document.getElementById("vendaProduto").value;
+    var quantidadev = document.getElementById("quantidadeProduto").value;
+    var funcionariov = document.getElementById("funcionarioProduto").value;
+    var vendas = {id: vda, produto: produtov, quantidade: quantidadev, 
+                    funcionario: funcionariov};
+    
+    for(i=0;i<Produtos.length;i++){
+        if(Produtos[i].nome===produtov){
+            if(Produtos[i].quantidade < quantidadev){
+                vda = idvendas--;
+                window.alert(`Temos apenas ${Produtos[i].quantidade} em estoque!`);
+                return;
+            }
+            else{
+                
+                atualizaVendaProduto(Produtos[i].id,Number(quantidadev)*-1,i);
+            }
+        }
+    }   
     for(i=0;i<Funcionarios.length;i++){
-        if(Funcionarios[i].nome===funcionariop){
-            Funcionarios[i].vendidos.push(idp);
+        if(Funcionarios[i].nome===funcionariov){
+            Funcionarios[i].vendidos.push(vda);
         }
     }
+    
+    Vendas.push(vendas);
+    localStorage.setItem("Vendas", JSON.stringify(Vendas));
+    localStorage.setItem("IdVendas", idvendas);
 }
+
+function comboProdutos(){
+    var string="";
+  
+        for(i=0;i<Produtos.length;i++){
+            string = string.concat("<option>"+Produtos[i].nome+"</option>");
+        }
+        document.getElementById("vendaProduto").innerHTML=string;
+    
+}
+
 function comboFuncionarios(){
     var string="";
     for(i=0;i<Funcionarios.length;i++){
@@ -288,4 +389,9 @@ function submitlogin(){
         document.getElementById("loginerrado").removeAttribute('hidden');
         return false;
     }
+}
+
+function startVendas(){
+    comboFuncionarios();
+    comboProdutos();
 }
