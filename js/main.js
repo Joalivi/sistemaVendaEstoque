@@ -290,13 +290,8 @@ function atualizaCadastroProduto(){
 
 function atualizaVendaProduto(id,qtdd,i){
         
-    if(localStorage.getItem("idedit")==JSON.stringify(Produtos[i].id)){
-            var aux;
-            aux = Number(Produtos[i].quantidade)
-            aux += qtdd
-            Produtos[i].quantidade=aux;
+            Produtos[i].quantidade-=qtdd;
             localStorage.setItem("Produtos", JSON.stringify(Produtos));
-        }
     
 }
 
@@ -345,11 +340,10 @@ function submitCadastroVenda(){
             if(Produtos[i].quantidade < quantidadev){
                 vda = idvendas--;
                 window.alert(`Temos apenas ${Produtos[i].quantidade} em estoque!`);
-                return;
+                return false;
             }
             else{
-                
-                atualizaVendaProduto(Produtos[i].id,Number(quantidadev)*-1,i);
+                atualizaVendaProduto(Produtos[i].id,quantidadev,i);
             }
         }
     }   
@@ -365,7 +359,7 @@ function submitCadastroVenda(){
 }
 
 function comboProdutos(){
-    var string="";
+    var string="<option selected disabled>Produtos</option>";
   
         for(i=0;i<Produtos.length;i++){
             string = string.concat("<option>"+Produtos[i].nome+"</option>");
@@ -375,7 +369,7 @@ function comboProdutos(){
 }
 
 function comboFuncionarios(){
-    var string="";
+    var string="<option selected disabled>Funcionário</option>";
     for(i=0;i<Funcionarios.length;i++){
         string = string.concat("<option>"+Funcionarios[i].nome+"</option>");
     }
