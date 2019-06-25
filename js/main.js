@@ -57,6 +57,25 @@ function listarTudoFuncionarios(){
     }
 }
 
+function listarFuncionariosMes(){
+    if(Funcionarios.length===0){
+        document.getElementById("listagemFuncionariosMes").innerHTML="<p>Nenhuma Venda até o momento</p>";    
+    }else{
+        var string="<table class=\"table table-hover mt-2\">"+
+        "<thead>"+
+            "<tr>"+
+            "<th scope=\"col\">Nome</th>"+
+            "<th scope=\"col\">Quantidade de Produtos</th>"+
+            "</tr>"+
+        "</thead><tbody>";
+        for(i=0;i<Funcionarios.length;i++){
+            string=string.concat("<tr><td>"+Funcionarios[i].nome+"</td><td>"+Funcionarios[i].vendidos+"</td></tr>");
+            
+        }
+        string=string.concat("</tbody></table>");
+        document.getElementById("listagemFuncionariosMes").innerHTML=string;
+    }
+}
 function listarTudo(){
     if(Produtos.length===0){
         document.getElementById("listagemProdutos").innerHTML="<p>Nenhum produto foi encontrado</p>";
@@ -100,11 +119,12 @@ function listarVendas(){
             "<th scope=\"col\">Produto</th>"+
             "<th scope=\"col\">Quantidade</th>"+
             "<th scope=\"col\">Funcionário</th>"+
+            "<th scope=\"col\">Data da Venda</th>"+
           "</tr>"+
         "</thead><tbody>";
         for(i=0;i<Vendas.length;i++){
             string=string.concat("<tr><td>"+Vendas[i].id+"</td><td>"+Vendas[i].produto+"</td><td>"+Vendas[i].quantidade+
-            "</td><td>"+Vendas[i].funcionario+"</td>"+
+            "</td><td>"+Vendas[i].funcionario+"</td><td>"+Vendas[i].data+"</td>"+
             "<td><button class=\"btn btn-outline-danger\" onclick=\"removerVendas("+Vendas[i].id+")\">"+
             "<img src=\"../img/trash.png\" height=\"20px\"width=\"20px\">"+ 
             "</button></td></tr>");
@@ -136,11 +156,18 @@ function removerProduto(id){
 
 function removerVendas(id){
     for(i=0;i<Vendas.length;i++){
+        
         if(Vendas[i].id==id){
+            for(j=0;j<Produtos.length;j++){
+                if(Produtos[j].nome === Vendas[i].produto){
+                    Produtos[j].quantidade += Number(Vendas[i].quantidade);
+                }
+            }
             Vendas.splice(i,1);
             
         }
     }
+    localStorage.setItem("Produtos", JSON.stringify(Produtos));
     localStorage.setItem("Vendas", JSON.stringify(Vendas));
     window.location.reload();
 }
@@ -290,8 +317,13 @@ function atualizaCadastroProduto(){
 
 function atualizaVendaProduto(id,qtdd,i){
         
-            Produtos[i].quantidade-=qtdd;
+   
+            var aux;
+            aux = Number(Produtos[i].quantidade)
+            aux += qtdd
+            Produtos[i].quantidade=aux;
             localStorage.setItem("Produtos", JSON.stringify(Produtos));
+     
     
 }
 
@@ -303,7 +335,7 @@ function submitCadastroFuncionario(){
     if(salariop>=10000)var cargop="Gerente";
     else if(salariop>5000 && salariop<10000) var cargop="Supervisor";
     else var cargop="Vendedor";
-    var vendidosp= [];
+    var vendidosp= 0;
     var funcionario = {nome: nomep, cargo: cargop, endereco: enderecop, salario: salariop, id: idp, vendidos: vendidosp};
     Funcionarios.push(funcionario);
     localStorage.setItem("Funcionarios", JSON.stringify(Funcionarios));
@@ -332,28 +364,43 @@ function submitCadastroVenda(){
     var produtov = document.getElementById("vendaProduto").value;
     var quantidadev = document.getElementById("quantidadeProduto").value;
     var funcionariov = document.getElementById("funcionarioProduto").value;
+    var dataVenda = document.getElementById("dataVenda").value;
     var vendas = {id: vda, produto: produtov, quantidade: quantidadev, 
-                    funcionario: funcionariov};
+                    funcionario: funcionariov, data:dataVenda};
     
     for(i=0;i<Produtos.length;i++){
         if(Produtos[i].nome===produtov){
             if(Produtos[i].quantidade < quantidadev){
                 vda = idvendas--;
                 window.alert(`Temos apenas ${Produtos[i].quantidade} em estoque!`);
-                return false;
+                return;
             }
             else{
-                atualizaVendaProduto(Produtos[i].id,quantidadev,i);
+                window.alert("Entrou");
+                atualizaVendaProduto(Produtos[i].id,Number(quantidadev)*-1,i);
+
             }
         }
     }   
     for(i=0;i<Funcionarios.length;i++){
         if(Funcionarios[i].nome===funcionariov){
-            Funcionarios[i].vendidos.push(vda);
+            if(Vendas.length == 0){
+                Funcionarios[i].vendidos += Number(quantidadev);
+            }
+           else if(dataVenda[5] == Vendas[Vendas.length-1].data[5] && dataVenda[6] == Vendas[Vendas.length-1].data[6]){
+                Funcionarios[i].vendidos += Number(quantidadev);
+           }
+           else{
+                for(j=0;j<Funcionarios.length;j++){
+                    Funcionarios[j].vendidos = 0;
+                }
+                Funcionarios[i].vendidos +=Number(quantidadev);
+           } 
         }
     }
     
     Vendas.push(vendas);
+    localStorage.setItem("Funcionarios", JSON.stringify(Funcionarios));
     localStorage.setItem("Vendas", JSON.stringify(Vendas));
     localStorage.setItem("IdVendas", idvendas);
 }
@@ -369,7 +416,7 @@ function comboProdutos(){
 }
 
 function comboFuncionarios(){
-    var string="<option selected disabled>Funcionário</option>";
+    var string="<option selected disabled>Funcionarios</option>";
     for(i=0;i<Funcionarios.length;i++){
         string = string.concat("<option>"+Funcionarios[i].nome+"</option>");
     }
@@ -388,4 +435,21 @@ function submitlogin(){
 function startVendas(){
     comboFuncionarios();
     comboProdutos();
+}
+
+function startFuncionarioMes(){
+    pegaMes();
+    listarFuncionariosMes()
+}
+
+function pegaMes(){
+    if(Vendas.length == 0){
+        document.getElementById('mesRegente').innerText = `Nenhuma venda lançada até o momento`;
+
+    }else{
+    var tam = Vendas.length;
+    var mes =  Vendas[tam-1].data[5] + Vendas[tam-1].data[6];
+    document.getElementById('mesRegente').innerText = 'Mês '+mes;
+}
+    
 }
