@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script type="text/javascript" src="../js/main.js"></script>
-    <title>Funcionários</title>
+    <title>Funcionário</title>
   </head>
-  <body>
+  <body onload="startFuncionarioMes()">
       <div class="container mt-4">
           <nav class="navbar navbar-expand-lg navbar-light bg-primary">
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -45,27 +45,19 @@
                   <a class="text-white" href="cadastrar.html">Cadastrar</a><br><br>
                   <a class="text-white" href="listar.html">Listar / Editar / Remover</a><br><br>
                   <a class="text-white" href="funcionarioMes.html">Funcionário do Mês</a><br><br>
-
               </div>
               <div class="col-md-9 mt-3">
-                  <h3><b>Listagem de Funcionários</b></h3><br>
-                  <div class="row ml-3">
-                        <div class="col-md-3">
-                            <input type="button" class="btn btn-primary" value="Listar Tudo" onclick="listarTudoFuncionarios()">
-                        </div>
-                        <form class="form-inline col-md-9">
-                            <input class="form-control mr-sm-2" type="search" id="buscanome" placeholder="Procurar por nome" aria-label="Search">
-                            <input type="button" class="btn btn-primary my-2 my-sm-0" value="Ir" onclick="buscarNomeFuncionarios()">
-                        </form>
-                  </div>
-                  <div id="listagemFuncionarios">
+                  <h3 style="text-align: center" ><b id="mesRegente"></b></h3><br>
+                  
+                  <div class="col-md-6 mt-5 offset-3" id="listagemFuncionariosMes">
                     
                   </div>
+                  
               </div>
           </div>
       </div> 
   <script src="../bootstrap/js/jquery-3.2.1.min.js"></script>
   <script src="../bootstrap/js/popper.min.js"></script>
-  <script src="../bootstrap/js/bootstrap.min.js"></script>s
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

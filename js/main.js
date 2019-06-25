@@ -61,6 +61,12 @@ function listarFuncionariosMes(){
     if(Funcionarios.length===0){
         document.getElementById("listagemFuncionariosMes").innerHTML="<p>Nenhuma Venda até o momento</p>";    
     }else{
+        var FuncionarioAux=Funcionarios;
+        FuncionarioAux=FuncionarioAux.sort(function(a,b){
+            var x=a.vendidos;
+            var y=b.vendidos;
+            return ((x>y)? -1 : ((x<y)? 1: 0));
+        });
         var string="<table class=\"table table-hover mt-2\">"+
         "<thead>"+
             "<tr>"+
@@ -69,7 +75,7 @@ function listarFuncionariosMes(){
             "</tr>"+
         "</thead><tbody>";
         for(i=0;i<Funcionarios.length;i++){
-            string=string.concat("<tr><td>"+Funcionarios[i].nome+"</td><td>"+Funcionarios[i].vendidos+"</td></tr>");
+            string=string.concat("<tr><td>"+FuncionarioAux[i].nome+"</td><td>"+FuncionarioAux[i].vendidos+"</td></tr>");
             
         }
         string=string.concat("</tbody></table>");
