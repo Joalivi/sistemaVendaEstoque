@@ -99,6 +99,9 @@ function listarTudo(){
           "</tr>"+
         "</thead><tbody>";
         for(i=0;i<Produtos.length;i++){
+            if(Produtos[i].vencido){
+                i++;
+            }
             string=string.concat("<tr><td>"+Produtos[i].id+"</td><td>"+Produtos[i].nome+"</td>"+
             "<td>"+Produtos[i].data+"</td><td>"+Produtos[i].taxa+"</td><td>"+Produtos[i].quantidade+
             "</td><td>"+Produtos[i].preco+"</td><td>"+Produtos[i].funcionario+"</td>"+
@@ -353,15 +356,27 @@ function submitCadastroProduto(){
     var nomep = document.getElementById("nomeProduto").value;
     var datap = document.getElementById("dataValidade").value;
     var taxap = document.getElementById("taxaImposto").value;
+    var vencidov = new Boolean(false);
     var quantidadep = document.getElementById("quantidadeProduto").value;
     var precop = document.getElementById("precoProduto").value;
     var funcionariop = document.getElementById("funcionarioProduto").value;
     var produto = {id: idp, nome: nomep, data: datap, taxa: taxap, quantidade: quantidadep, 
-                   preco: precop, funcionario: funcionariop};
+                   preco: precop, funcionario: funcionariop, vencidov:vencido};
+    
+    var partesData = datap.split("/");
+    var auxdata = new Date(partesData[2], partesData[1] - 1, partesData[0]);
+    
+    if(auxdata > new Date()){
+        window.alert("Produto com validade vencida! Adicionado às perdas.");
+        vencidov = true;
+        Produtos.push(produto);
+        localStorage.setItem("Produtos", JSON.stringify(Produtos));
+        localStorage.setItem("IdProduto", idproduto);
+    }else{               
     Produtos.push(produto);
     localStorage.setItem("Produtos", JSON.stringify(Produtos));
     localStorage.setItem("IdProduto", idproduto);
-    
+    }
 }
 
 function submitCadastroVenda(){
@@ -371,8 +386,10 @@ function submitCadastroVenda(){
     var quantidadev = document.getElementById("quantidadeProduto").value;
     var funcionariov = document.getElementById("funcionarioProduto").value;
     var dataVenda = document.getElementById("dataVenda").value;
+    var lucrov = 0;
+    var impostov = 0;
     var vendas = {id: vda, produto: produtov, quantidade: quantidadev, 
-                    funcionario: funcionariov, data:dataVenda};
+                    funcionario: funcionariov, data:dataVenda, lucrov:lucro, impostov:imposto};
     
     for(i=0;i<Produtos.length;i++){
         if(Produtos[i].nome===produtov){
@@ -382,9 +399,11 @@ function submitCadastroVenda(){
                 return;
             }
             else{
-                window.alert("Entrou");
+                
                 atualizaVendaProduto(Produtos[i].id,Number(quantidadev)*-1,i);
-
+                lucrov = Number(quantidadev)*Number(Produtos[i].preco);
+                impostov = Number(lucrov*Number(Produtos[i].taxa)/100);    
+                
             }
         }
     }   
@@ -457,5 +476,36 @@ function pegaMes(){
     var mes =  Vendas[tam-1].data[5] + Vendas[tam-1].data[6];
     document.getElementById('mesRegente').innerText = 'Mês '+mes;
 }
+    
+}
+
+function calculaLucro(){
+    var lucro = 0;
+    var imposto = 0;
+    var perdas = 0;
+
+    for(i=0;i<Vendas.length;i++){
+        lucro += Vendas[i].lucro;
+        imposto += Vendas[i].imposto;
+    }
+    for(j=0;j<Produtos.length;j++){
+        perdas = Number(Produtos[j].quantidade)*Number(Produtos[j].preco);
+    }
+    lucroL = lucro - imposto - perdas;
+    var string=
+    "<h1>Lucro Líquido:</h1>" + lucroL+
+    "<table class=\"table table-hover mt-5\">"+
+    "<thead>"+
+        "<tr>"+
+        "<th scope=\"col\">Lucro Bruto</th>"+
+        "<th scope=\"col\">Perdas</th>"+
+        "<th scope=\"col\">Imposto</th>"+
+        "</tr>"+
+    "</thead><tbody>";
+    
+        "<tr><td>"+lucro+"</td><td>"+perdas+"</td><td>"+imposto+"</td>"+"</td></tr>"
+    
+    string=string.concat("</tbody></table>");
+    document.getElementById("calculaLucro").innerHTML=string;
     
 }
