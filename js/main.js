@@ -6,6 +6,12 @@ if(localStorage.getItem("Produtos")===null){
     var Produtos = JSON.parse(ProdutosStorage);
     var idproduto = localStorage.getItem("IdProduto");
 }
+if(localStorage.getItem("Perdas")===null){
+    var Perdas = [];    
+}else{
+    var PerdasStorage=localStorage.getItem("Perdas");
+    var Perdas = JSON.parse(PerdasStorage);
+}
 
 if(localStorage.getItem("Funcionarios")===null){
     var Funcionarios = [];
@@ -119,7 +125,7 @@ function listarTudo(){
 
 function listarVendas(){
     if(Produtos.length===0){
-        document.getElementById("listagemVendas").innerHTML="<p>Nenhum produto foi encontrado</p>";
+        document.getElementById("listagemVendas").innerHTML="<p>Nenhuma venda foi encontrada</p>";
     }else{
         var string="<table class=\"table table-hover mt-2\">"+
         "<thead>"+
@@ -361,22 +367,21 @@ function submitCadastroProduto(){
     var precop = document.getElementById("precoProduto").value;
     var funcionariop = document.getElementById("funcionarioProduto").value;
     var produto = {id: idp, nome: nomep, data: datap, taxa: taxap, quantidade: quantidadep, 
-                   preco: precop, funcionario: funcionariop, vencidov:vencido};
+                   preco: precop, funcionario: funcionariop, vencido:vencidov};
     
-    var partesData = datap.split("/");
-    var auxdata = new Date(partesData[2], partesData[1] - 1, partesData[0]);
+    var partesData = datap.split("-");
+    var auxdata = new Date(partesData[0], partesData[1] - 1, partesData[2]);
     
-    if(auxdata > new Date()){
+    if(auxdata < new Date()){
         window.alert("Produto com validade vencida! Adicionado às perdas.");
-        vencidov = true;
-        Produtos.push(produto);
-        localStorage.setItem("Produtos", JSON.stringify(Produtos));
-        localStorage.setItem("IdProduto", idproduto);
-    }else{               
+        produto.vencido = true;
+        idproduto--;
+        Perdas.push(produto);
+        localStorage.setItem("Perdas", JSON.stringify(Perdas));
+    }               
     Produtos.push(produto);
     localStorage.setItem("Produtos", JSON.stringify(Produtos));
     localStorage.setItem("IdProduto", idproduto);
-    }
 }
 
 function submitCadastroVenda(){
@@ -389,20 +394,20 @@ function submitCadastroVenda(){
     var lucrov = 0;
     var impostov = 0;
     var vendas = {id: vda, produto: produtov, quantidade: quantidadev, 
-                    funcionario: funcionariov, data:dataVenda, lucrov:lucro, impostov:imposto};
+                    funcionario: funcionariov, data:dataVenda, lucro:lucrov, imposto:impostov};
     
     for(i=0;i<Produtos.length;i++){
-        if(Produtos[i].nome===produtov){
-            if(Produtos[i].quantidade < quantidadev){
+        if(Produtos[i].nome===produtov && !Produtos[i].vencido){
+            if(Number(Produtos[i].quantidade) < Number(quantidadev)){
                 vda = idvendas--;
-                window.alert(`Temos apenas ${Produtos[i].quantidade} em estoque!`);
+                window.alert("Temos apenas " +Produtos[i].quantidade+" em estoque!");
                 return;
             }
             else{
                 
                 atualizaVendaProduto(Produtos[i].id,Number(quantidadev)*-1,i);
-                lucrov = Number(quantidadev)*Number(Produtos[i].preco);
-                impostov = Number(lucrov*Number(Produtos[i].taxa)/100);    
+                vendas.lucro = Number(quantidadev)*Number(Produtos[i].preco);
+                vendas.imposto = Number(vendas.lucro*Number(Produtos[i].taxa)/100);    
                 
             }
         }
@@ -434,7 +439,8 @@ function comboProdutos(){
     var string="<option selected disabled>Produtos</option>";
   
         for(i=0;i<Produtos.length;i++){
-            string = string.concat("<option>"+Produtos[i].nome+"</option>");
+            if(!Produtos[i].vencido)
+                string = string.concat("<option>"+Produtos[i].nome+"</option>");
         }
         document.getElementById("vendaProduto").innerHTML=string;
     
@@ -488,8 +494,8 @@ function calculaLucro(){
         lucro += Vendas[i].lucro;
         imposto += Vendas[i].imposto;
     }
-    for(j=0;j<Produtos.length;j++){
-        perdas = Number(Produtos[j].quantidade)*Number(Produtos[j].preco);
+    for(j=0;j<Perdas.length;j++){
+        perdas = Number(Perdas[j].quantidade)*Number(Perdas[j].preco);
     }
     lucroL = lucro - imposto - perdas;
     var string=
@@ -501,8 +507,7 @@ function calculaLucro(){
         "<th scope=\"col\">Perdas</th>"+
         "<th scope=\"col\">Imposto</th>"+
         "</tr>"+
-    "</thead><tbody>";
-    
+    "</thead><tbody>"+
         "<tr><td>"+lucro+"</td><td>"+perdas+"</td><td>"+imposto+"</td>"+"</td></tr>"
     
     string=string.concat("</tbody></table>");
