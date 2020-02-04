@@ -4,7 +4,7 @@ O objetivo desse projeto foi construir um programa em JavaScript Puro, que contr
 
 Nessa aplicação é possível: Cadastrar produtos, funcionários, vender, organizar o estoque e verificar o lucro da empresa. Foi utilizado o FrameWork [BootStrap](https://getbootstrap.com/) para estrutura da página.
 
-#Equipe
+# Equipe
 
 * **Joaquim Augusto Pomarico** - [jacaTM](https://github.com/jacaTM)
 * **João Victor Castro de Oliveira** - [Joalivi](https://github.com/Joalivi)
